@@ -182,15 +182,17 @@
 
                                 <div class="form-group">
                                     <label for="trabajosAnteriores">Trabajos Anteriores:</label>
-                                    <input type="text" name="trabajosAnteriores" id="trabajosAnteriores" class="form-control 
+                                    <textarea name="trabajosAnteriores" id="trabajosAnteriores" class="form-control 
                                     @error('trabajosAnteriores') 
                                         is-invalid 
-                                    @enderror" value="{{ old('trabajosAnteriores') }}">
-                                    
+                                    @enderror" maxlength="250" style="width: 100%; height: 150px;">{{ old('trabajosAnteriores') }}</textarea>
+                                
                                     @error('trabajosAnteriores')
                                         <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
+                                
+                                
                             </div>
                         </div>
                     </div>

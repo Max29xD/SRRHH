@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('puesto', 50);
             $table->date('fechaContratacion');
             $table->date('fechaSalida')->nullable();
-            $table->string('trabajosAnteriores', 100)->nullable();
+            $table->text('trabajosAnteriores')->nullable();
             $table->timestamps();
 
             $table->foreign('empleado_id')

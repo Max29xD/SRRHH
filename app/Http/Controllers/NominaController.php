@@ -17,6 +17,8 @@ class NominaController extends Controller
             ->having('asistencias_count', '<', 30)
             ->get();
 
+        
+
         // Calculamos y asignamos los atributos adicionales a cada empleado
         foreach ($empleados as $empleado) {
             
@@ -28,6 +30,9 @@ class NominaController extends Controller
                 // guardando el sueldo
                 $sueldo = $datosLaborales->salario;
 
+                //ganado por dia
+                $pagoPorDia = $sueldo / 30;
+
                 // Calculo de los años de antigüedad
                 $antiguedad = Carbon::parse($datosLaborales->fechaContratacion)->diffInYears(Carbon::now());
 
@@ -38,11 +43,18 @@ class NominaController extends Controller
                     $bonoAntiguedad = 0;
                 }
 
-                // Calculo del descuento AFP
-                $descuentoAFP = $sueldo * 0.1271;
+                
+                //no lo toma en cuenta si no tienes dias trabajados
+                if($empleado->asistencias_count > 0){
+                    $totalGanado = ($pagoPorDia *  $empleado->asistencias_count) + $bonoAntiguedad; 
+                    $descuentoAFP = $totalGanado * 0.1271;
 
-                // Calcular total ganado
-                $totalGanado = $sueldo + $bonoAntiguedad; 
+                        
+                }else{
+                    $totalGanado = 0;
+                    $descuentoAFP = 0;
+                    $bonoAntiguedad = 0;
+                }
 
                 // Calcular líquido pagable
                 $liquidoPagable = $totalGanado - $descuentoAFP;
@@ -71,6 +83,9 @@ class NominaController extends Controller
             // guarda el sueldo
             $sueldo = $datosLaborales->salario;
 
+            //ganado por dia
+            $pagoPorDia = $sueldo / 30;
+
             // Calculo de los años de antigüedad
             $antiguedad = Carbon::parse($datosLaborales->fechaContratacion)->diffInYears(Carbon::now());
 
@@ -81,15 +96,22 @@ class NominaController extends Controller
                 $bonoAntiguedad = 0;
             }
 
+            //no lo toma en cuenta si no tienes dias trabajados
+            if($empleado->asistencias_count > 0){
+                $totalGanado = ($pagoPorDia *  $empleado->asistencias_count) + $bonoAntiguedad; 
+                $descuentoAFP = $totalGanado * 0.1271;
 
-            // descuento AFP de la afp
-            $descuentoAFP = $sueldo * 0.1271;
+                // Obtener el descuento del formulario, asegurando que no sea nulo
+                $descuento = $request->input('descuento', 0);        
+            }else{
+                $totalGanado = 0;
+                $descuento = 0;
+                $descuentoAFP = 0;
+                $bonoAntiguedad = 0;
+            }
+           
 
-            // Calcular total ganado
-            $totalGanado = $sueldo + $bonoAntiguedad;
-
-            // Obtener el descuento del formulario, asegurando que no sea nulo
-            $descuento = $request->input('descuento', 0);
+            
 
             //líquido pagable
             $liquidoPagable = $totalGanado - $descuento - $descuentoAFP;

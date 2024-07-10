@@ -63,7 +63,7 @@ return [
     |
     */
 
-    'logo' => '<b>GRUPO</b>B',
+    'logo' => '<b>GRUPO</b>B |',
     'logo_img' => 'vendor/adminlte/dist/img/logoFinor.png',//logo
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,//par cuando quiera 2 logos 1 barra expandida 2 barra pequeña
@@ -152,7 +152,7 @@ return [
     |
     */
 
-    'layout_topnav' => null,
+    'layout_topnav' => true,
     'layout_boxed' => null,
     'layout_fixed_sidebar' => true,
     'layout_fixed_navbar' => true,

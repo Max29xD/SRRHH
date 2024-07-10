@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Empleado;
 
 class HomeController extends Controller
 {
@@ -23,6 +24,13 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $empleados = Empleado::join('datos_laborales', 'empleados.id', '=', 'datos_laborales.empleado_id')
+        ->orderByDesc('datos_laborales.salario')
+        ->select('empleados.*', 'datos_laborales.salario', 'datos_laborales.puesto')
+        ->take(5)
+        ->get();
+
+        return view('home', compact('empleados'));
     }
+    
 }

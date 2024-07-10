@@ -27,12 +27,14 @@ class StoreEmpleadoRequest extends FormRequest
             'telefono' => 'required|string|max:16|unique:empleados,telefono' . $this->empleado,
             'fechaNacimiento' => 'required|date',
             'email' => 'required|email|max:50|unique:empleados,email' . $this->empleado,
-            'direccion' => 'required|string|max:50',    
+            'direccion' => 'required|string|max:200',  
+            //-----------------------------------------------  
             'salario' => 'required|numeric',
             'puesto' => 'required|string|max:50',
             'fechaContratacion' => 'required|date',
             'fechaSalida' => 'nullable|date',
-            'trabajosAnteriores' => 'nullable|string|max:100',
+            'trabajosAnteriores' => 'nullable|string|max:250',
+            //--------------------------------------------------
             'nombreRelacionEmpleado' => 'required|string|max:100',
             'numeroEmergenciaFamiliar' => 'required|string|max:15',
             'direccionEmergencia' => 'required|string|max:100',

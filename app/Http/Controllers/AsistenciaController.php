@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Asistencia;
 use App\Models\Empleado;
-use Carbon\Carbon;//para que pueda manejar horas y fechas
+use Carbon\Carbon;
 
 class AsistenciaController extends Controller
 {
@@ -17,14 +17,14 @@ class AsistenciaController extends Controller
     public function registrarLlegada(Request $request)
     {
         $empleado = Empleado::where('ci', $request->ci)->firstOrFail();//devuelve el primer registro que coinciada
-        $diasTrabajados = $empleado->asistencias()->count();//cuenta los registros de asistencia que tiene
+        //$diasTrabajados = $empleado->asistencias()->count();//cuenta los registros de asistencia que tiene falta corregir
 
         Asistencia::create([
             'empleado_id' => $empleado->id,//para que empleado es la asistencia
             'hora_llegada' => Carbon::now()->format('H:i:s'), 
         ]);
 
-        return redirect()->route('asistencias.index'/*,  ['diasTrabajados' => $diasTrabajados] */)
+        return redirect()->route('asistencias.index')
         ->with('success', 'Llegada registrada exitosamente.');
     }
 

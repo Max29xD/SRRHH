@@ -20,7 +20,7 @@ return new class extends Migration
             $table->text('descripcion')->nullable();
             $table->timestamps();
 
-            $table->foreign('empleado_id')->references('id')->on('empleados');
+            $table->foreign('empleado_id')->references('id')->on('empleados')->onDelete('cascade');
 
            // $table->foreignId('empleado_id')->constrained()->onDelete('cascade');
            //forma abreviada de definer tanto la clave foránea como la referencia a la tabla de empleados

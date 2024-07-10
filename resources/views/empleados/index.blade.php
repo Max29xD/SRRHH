@@ -27,9 +27,11 @@
                     <tr>
                         <th>ID</th>
                         <th>Nombre Completo</th>
+                        <th>C.I.</th>
                         <th>Teléfono</th>
                         <th>Email</th>
                         <th>Puesto</th>
+                        <th>Sueldo</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -38,9 +40,12 @@
                         <tr>
                             <td>{{ $empleado->id }}</td>
                             <td>{{ $empleado->nombreCompleto }}</td>
+                            <td>{{ $empleado->ci }}</td>
                             <td>{{ $empleado->telefono }}</td>
                             <td>{{ $empleado->email }}</td>
                             <td>{{ $empleado->datosLaborales->puesto }}</td>
+                            <td>{{ $empleado->datosLaborales->salario }} Bs</td>
+
                             <td>
                                 <a href="{{ route('empleados.edit', $empleado->id) }}" class="btn btn-primary btn-sm">Editar</a>
                                 <form action="{{ route('empleados.destroy', $empleado->id) }}" method="POST" style="display:inline-block;">
