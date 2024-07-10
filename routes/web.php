@@ -9,9 +9,9 @@ use App\Http\Controllers\NominaController;
 Auth::routes();
 
 Route::get('/', function () {
-    return view('home');
+    return view('login');
 });
-
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::prefix('empleados')->group(function () {
     Route::get('/', [EmpleadoController::class, 'index'])->name('empleados.index'); // Listar empleados
     Route::get('/create', [EmpleadoController::class, 'create'])->name('empleados.create'); // Formulario de creación
