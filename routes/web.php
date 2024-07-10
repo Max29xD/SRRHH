@@ -6,13 +6,11 @@ use App\Http\Controllers\AsistenciaController;
 use App\Http\Controllers\LicenciaController;
 use App\Http\Controllers\NominaController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/', function () {
+    return view('home');
+});
 
 Route::prefix('empleados')->group(function () {
     Route::get('/', [EmpleadoController::class, 'index'])->name('empleados.index'); // Listar empleados
