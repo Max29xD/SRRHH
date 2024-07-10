@@ -8,9 +8,7 @@ use App\Http\Controllers\NominaController;
 
 Auth::routes();
 
-Route::get('/', function () {
-    return view('login');
-});
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('login');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::prefix('empleados')->group(function () {
     Route::get('/', [EmpleadoController::class, 'index'])->name('empleados.index'); // Listar empleados
