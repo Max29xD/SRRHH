@@ -27,6 +27,10 @@
                             <td>{{ $empleado->nombreCompleto }}</td>
                         </tr>
                         <tr>
+                            <th>C.I.</th>
+                            <td>{{ $empleado->ci }}</td>
+                        </tr>
+                        <tr>
                             <th>Teléfono</th>
                             <td>{{ $empleado->telefono }}</td>
                         </tr>
