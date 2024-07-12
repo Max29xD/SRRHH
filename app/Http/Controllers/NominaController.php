@@ -12,9 +12,9 @@ class NominaController extends Controller
    
     public function calcular()
     {
-        // Obtenemos los empleados que tienen menos de 30 días trabajados
+        // Obtenemos los empleados que tienen 30 días trabajados
         $empleados = Empleado::withCount('asistencias')
-            ->having('asistencias_count', '<', 30)
+            ->having('asistencias_count', '<=', 30)
             ->get();
 
         
