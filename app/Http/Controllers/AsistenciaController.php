@@ -24,7 +24,7 @@ class AsistenciaController extends Controller
             'hora_llegada' => Carbon::now()->format('H:i:s'), 
         ]);
 
-        return redirect()->route('asistencias.index')
+        return redirect()->route('asistencias.create')
         ->with('success', 'Llegada registrada exitosamente.');
     }
 
