@@ -63,7 +63,7 @@ return [
     |
     */
 
-    'logo' => '<b>GRUPO</b>B |',
+    'logo' => '<b>Software</b>1 |',
     'logo_img' => 'vendor/adminlte/dist/img/logoFinor.png',//logo
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,//par cuando quiera 2 logos 1 barra expandida 2 barra pequeña
@@ -334,8 +334,7 @@ return [
         [
             'text' => 'NOMINA',
             'url' => 'nomina/calcular',
-            'icon' => 'fas fa-money-check-alt',
-            
+            'icon' => 'fas fa-money-check-alt', 
         ],
 
         
