@@ -39,7 +39,12 @@ class Empleado extends Model
         return $this->hasMany(Licencia::class);
     }
 
-    public function nominas(){//un empleado pertenece a una nomina
-        return $this->belongsTo(Nomina::class);
+    public function nominas()
+    {
+        return $this->hasMany(Nomina::class);
+    }
+
+    public function descuentos(){
+        return $this->hasMany(Descuento::class);
     }
 }

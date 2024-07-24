@@ -44,6 +44,31 @@ class AsistenciaController extends Controller
         return redirect()->route('asistencias.create')->with('success', 'Hora de salida registrada correctamente.');
     }
 
+    public function createManual()
+    {
+        return view('asistencias.createManual');
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'ci' => 'required|exists:empleados,ci',
+            'hora_llegada' => 'nullable|date_format:H:i',
+            'hora_salida' => 'nullable|date_format:H:i',
+        ]);
+
+        $empleado = Empleado::where('ci', $request->ci)->firstOrFail();
+
+        Asistencia::create([
+            'empleado_id' => $empleado->id,
+            'hora_llegada' => $request->hora_llegada,
+            'hora_salida' => $request->hora_salida,
+        ]);
+
+        return redirect()->route('asistencias.create')->with('success', 'Asistencia guardada exitosamente.');
+    }
+
+
     public function index(Request $request)
     {
         // Obtiene las asistencias con la relación al empleado, aplicando filtros condicionales

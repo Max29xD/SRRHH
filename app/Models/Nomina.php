@@ -17,12 +17,14 @@ class Nomina extends Model
         'bonoAntiguedad',
         'totalGanado',
         'afp',
-        'descuento',
+        'estado',
+        'rc_iva',
+        'totalDescuento',
         'liquidoPagable',
     ];
 
     public function empleado(){
 
-         return $this->belongsTo(Empleado::class);
+         return $this->hasMany(Empleado::class);
     }
 }

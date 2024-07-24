@@ -5,6 +5,7 @@ use App\Http\Controllers\EmpleadoController;
 use App\Http\Controllers\AsistenciaController;
 use App\Http\Controllers\LicenciaController;
 use App\Http\Controllers\NominaController;
+use App\Http\Controllers\DescuentoController;
 
 Auth::routes();
 
@@ -28,7 +29,10 @@ Route::prefix('asistencias')->group(function () {
     Route::post('/llegada', [AsistenciaController::class, 'registrarLlegada'])->name('asistencias.registrarLlegada'); // Registrar llegada
     Route::post('/salida', [AsistenciaController::class, 'registrarSalida'])->name('asistencias.registrarSalida'); // Registrar salida
     Route::get('/', [AsistenciaController::class, 'index'])->name('asistencias.index'); // Ver asistencia
-    /* Route::get('/filtrado', [AsistenciaController::class, 'filtrado'])->name('asistencias.filtrado'); */
+    
+    Route::get('/createManual', [AsistenciaController::class, 'createManual'])->name('asistencias.createManual');
+    Route::post('/store', [AsistenciaController::class, 'store'])->name('asistencias.store');
+
 });
 
 Route::prefix('licencias')->group(function () {
@@ -42,10 +46,14 @@ Route::prefix('licencias')->group(function () {
 
 Route::prefix('nomina')->group(function () {
     Route::get('/calcular', [NominaController::class, 'calcular'])->name('nomina.calcular'); // Calcular sueldos
-    Route::post('/generar', [NominaController::class, 'generar'])->name('nomina.generar'); // Generar nóminas
-    Route::get('/historial', [NominaController::class, 'historial'])->name('nomina.historial'); // Historial de pagos
-    Route::post('/generarBoleta/{empleado}', [NominaController::class, 'generarBoleta'])->name('nomina.generarBoleta');
-    Route::get('/boleta/{nomina}', [NominaController::class, 'boleta'])->name('nomina.boleta');
+    Route::post('/guardar', [NominaController::class, 'guardar'])->name('nomina.guardar');
+    Route::post('/aplicarDescuentos', [NominaController::class, 'aplicarDescuentos'])->name('nomina.aplicarDescuentos');//trabajando aqui----
+    Route::get('/boleta', [NominaController::class, 'boleta'])->name('nomina.boleta');
+});
+
+Route::prefix('descuentos')->group(function () {
+    Route::get('/create', [DescuentoController::class, 'create'])->name('descuentos.create'); // Calcular sueldos
+    Route::post('/store', [DescuentoController::class, 'store'])->name('descuentos.store');
 });
 
 

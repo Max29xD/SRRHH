@@ -4,14 +4,60 @@
 
 @section('content_header')
     <div class="bg-light p-3">
-        <h1 class="text-center"><strong>Nomina</strong></h1>
+        <h1 class="text-center"><strong>Planilla de Sueldos</strong></h1>
     </div>
 @stop
 
 @section('content')
+    <div class="container-fluid">
+        <!-- Formulario de búsqueda -->
+        <div class="card mb-3">
+            <div class="card-header">
+                <h3 class="card-title">Buscar Nómina</h3>
+            </div>
+            <div class="card-body">
+                <form action="{{ route('nomina.calcular') }}" method="GET">
+                    @csrf
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="anio">Año</label>
+                            <input type="number" class="form-control" id="anio" name="anio" value="{{ request('anio') }}" placeholder="Ingrese el año" required>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="mes">Mes</label>
+                            <select class="form-control" id="mes" name="mes" required>
+                                <option value="">Seleccione un mes</option>
+                                <option value="01" {{ request('mes') == '01' ? 'selected' : '' }}>Enero</option>
+                                <option value="02" {{ request('mes') == '02' ? 'selected' : '' }}>Febrero</option>
+                                <option value="03" {{ request('mes') == '03' ? 'selected' : '' }}>Marzo</option>
+                                <option value="04" {{ request('mes') == '04' ? 'selected' : '' }}>Abril</option>
+                                <option value="05" {{ request('mes') == '05' ? 'selected' : '' }}>Mayo</option>
+                                <option value="06" {{ request('mes') == '06' ? 'selected' : '' }}>Junio</option>
+                                <option value="07" {{ request('mes') == '07' ? 'selected' : '' }}>Julio</option>
+                                <option value="08" {{ request('mes') == '08' ? 'selected' : '' }}>Agosto</option>
+                                <option value="09" {{ request('mes') == '09' ? 'selected' : '' }}>Septiembre</option>
+                                <option value="10" {{ request('mes') == '10' ? 'selected' : '' }}>Octubre</option>
+                                <option value="11" {{ request('mes') == '11' ? 'selected' : '' }}>Noviembre</option>
+                                <option value="12" {{ request('mes') == '12' ? 'selected' : '' }}>Diciembre</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-4 d-flex align-items-end">
+                            <button type="submit" class="btn btn-primary btn-block">Buscar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Lista de empleados -->
+        <form action="{{ route('nomina.guardar') }}" method="POST">
+    @csrf
     <div class="card">
-        <div class="card-header">
+        <div class="card-header d-flex justify-content-between align-items-center">
             <h3 class="card-title">Lista de empleados</h3>
+            <div class="right">
+                <button type="submit" class="btn btn-primary">Guardar Nómina</button>
+            </div>
         </div>
         <div class="card-body">
             <table class="table table-bordered">
@@ -19,13 +65,15 @@
                     <tr>
                         <th>CI</th>
                         <th>Nombre</th>
-                        <th>Sueldo</th>
+                        <th>Sueldo base</th>
                         <th>Días Trabajados</th>
                         <th>Bono Antigüedad</th>
                         <th>Total Ganado</th>
                         <th>AFP</th>
+                        <th>RC-IVA</th>
+                        <th>Total Descuentos</th>
                         <th>Líquido Pagable</th>
-                        <th>Boleta de Pago</th>
+                        <th>Agregar Descuento</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -38,30 +86,29 @@
                             <td>{{ number_format($empleado->bonoAntiguedad ?? 0, 2) }} Bs</td>
                             <td>{{ number_format($empleado->totalGanado ?? 0, 2) }} Bs</td>
                             <td>{{ number_format($empleado->afp ?? 0, 2) }} Bs</td>
+                            <td>{{ number_format($empleado->rc_iva ?? 0, 2) }} Bs</td>
+                            <td>{{ number_format($empleado->totalDescuento ?? 0, 2) }} Bs</td>
                             <td>{{ number_format($empleado->liquidoPagable ?? 0, 2) }} Bs</td>
-                            <td>
-                                <form action="{{ route('nomina.generarBoleta', $empleado->id) }}" method="POST">
-                                    @csrf
-                                    <div class="form-group">
-                                        <input type="number" name="descuento" class="form-control col-md-9" placeholder="Descuento" step="0.01" required>
-                                    </div>
-                                    <button type="submit" class="btn btn-primary">Generar boleta</button>
-                                </form>
-                            </td>
+                            <td class="text-center">
+                                <a href="{{ route('descuentos.create', ['empleado_id' => $empleado->id]) }}" class="btn btn-danger">
+                                    <i class="fas fa-minus"></i>{{-- deberia de ser a la ruta nomina.plicarDescuento --}}
+                                </a>
+                            </td>                
                         </tr>
                     @endforeach
                 </tbody>
             </table>
         </div>
     </div>
+</form>
+
+    </div>
 @stop
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const alert = document.getElementById('success-alert');
-        if (alert) {
-            setTimeout(() => {
-                alert.style.display = 'none';
-            }, 3000);
-        }
-    });
-</script>
+
+@section('css')
+    <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
+@stop
+
+@section('js')
+    <script> console.log('Nómina Page'); </script>
+@stop

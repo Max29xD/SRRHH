@@ -11,11 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('asistencias', function (Blueprint $table) {
+        Schema::create('detalle_nominas', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('empleado_id')->constrained('empleados')->onDelete('cascade');//esta abreviado
-            $table->time('hora_llegada')->nullable();
-            $table->time('hora_salida')->nullable();
             $table->timestamps();
         });
     }
@@ -25,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('asistencias');
+        Schema::dropIfExists('detalle_nominas');
     }
 };

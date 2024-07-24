@@ -317,10 +317,17 @@ return [
                     'icon' => 'fas fa-user-check',
                 ],
                 [
+                    'text' => 'Registro Manual',
+                    'url' => 'asistencias/createManual',
+                    'icon' => 'fas fa-pencil-alt',
+
+                ],
+                [
                     'text' => 'Ver Asistencia',
                     'url' => 'asistencias',
                     'icon' => 'fas fa-list',
                 ],
+               
             ],
         ],
         //boton 3
@@ -333,9 +340,21 @@ return [
        //boton 4
         [
             'text' => 'NOMINA',
-            'url' => 'nomina/calcular',
             'icon' => 'fas fa-money-check-alt', 
+            'submenu' => [
+                [
+                    'text' => 'planilla',
+                    'url' => 'nomina/calcular',
+                    'icon' => 'fas fa-user-check',
+                ],
+                [
+                    'text' => 'Generar Boleta',
+                    'url' => 'nomina/boleta',
+                    'icon' => 'fas fa-pencil-alt',
+                ],
+               
         ],
+        ]
 
         
        
