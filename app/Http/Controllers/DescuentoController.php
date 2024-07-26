@@ -17,31 +17,36 @@ class DescuentoController extends Controller
         return view('descuentos.create', compact('nominas'));
     }
 
-    public function store(StoreDescuentoRequest $request)
-{
-    // Los datos ya están validados por el FormRequest
-    $validated = $request->validated();
+    public function edit($id)
+    {
+        // Encuentra el descuento por ID
+        $descuento = Descuento::findOrFail($id);
 
-    // Encuentra el empleado y la nómina
-    $empleado = Empleado::find($validated['empleado_id']);
-    $nomina = Nomina::where('id', $empleado->nomina_id)->first();
+        // Retorna la vista con el descuento encontrado
+        return view('descuentos.edit', compact('descuento'));
+    }
 
-    // Verifica si la nómina existe
-    if ($nomina) {
-        // Crear el nuevo descuento
-        Descuento::create([
-            'empleado_id' => $validated['empleado_id'],
+    public function update(Request $request, $id)
+    {
+        // Valida los datos del formulario
+        $validated = $request->validate([
+            'monto' => 'required|numeric|min:0',
+            'tipoDescuento' => 'required|string',
+            'descripcion' => 'nullable|string',
+        ]);
+
+        // Encuentra el descuento por ID
+        $descuento = Descuento::findOrFail($id);
+
+        // Actualiza el descuento con los datos validados
+        $descuento->update([
             'monto' => $validated['monto'],
             'tipoDescuento' => $validated['tipoDescuento'],
             'descripcion' => $validated['descripcion'],
         ]);
 
-        // Actualizar el total de descuentos en la nómina
-        $nomina->totalDescuentos += $validated['monto'];
-        $nomina->save();
+        // Redirige a una ruta adecuada con un mensaje de éxito
+        return redirect()->route('nomina.calcular')->with('success', 'Descuento actualizado correctamente.');
     }
-
-    // Redirige a la vista deseada con un mensaje de éxito
-    return redirect()->route('nomina.index')->with('success', 'Descuento aplicado exitosamente');
-}
+    
 }

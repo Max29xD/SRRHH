@@ -12,8 +12,30 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('detalle_nominas', function (Blueprint $table) {
-            $table->id();
+            $table->unsignedBigInteger('empleado_id');
+            $table->unsignedBigInteger('nomina_id');
+            $table->integer('diasTrabajados')->nullable();
+            $table->float('bonoAntiguedad');
+            $table->float('totalGanado');
+            $table->float('afp');
+            $table->float("rc_iva");
+            $table->float('descuentoAdicional');
+            $table->float('totalDescuento')->default(0);
+            $table->float('liquidoPagable');
+           
             $table->timestamps();
+
+            $table->foreign('empleado_id')
+                ->references('id')
+                ->on('empleados')
+                ->onDelete('cascade');
+
+            $table->foreign('nomina_id')
+                ->references('id')
+                ->on('nominas')
+                ->onDelete('cascade');
+
+            $table->primary(['empleado_id', 'nomina_id']);
         });
     }
 

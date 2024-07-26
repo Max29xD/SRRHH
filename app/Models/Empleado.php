@@ -39,9 +39,9 @@ class Empleado extends Model
         return $this->hasMany(Licencia::class);
     }
 
-    public function nominas()
+    public function detalleNomina()
     {
-        return $this->hasMany(Nomina::class);
+        return $this->hasMany(detalleNomina::class);
     }
 
     public function descuentos(){

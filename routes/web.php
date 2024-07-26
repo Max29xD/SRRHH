@@ -47,13 +47,16 @@ Route::prefix('licencias')->group(function () {
 Route::prefix('nomina')->group(function () {
     Route::get('/calcular', [NominaController::class, 'calcular'])->name('nomina.calcular'); // Calcular sueldos
     Route::post('/guardar', [NominaController::class, 'guardar'])->name('nomina.guardar');
+    
     Route::post('/aplicarDescuentos', [NominaController::class, 'aplicarDescuentos'])->name('nomina.aplicarDescuentos');//trabajando aqui----
     Route::get('/boleta', [NominaController::class, 'boleta'])->name('nomina.boleta');
+    Route::get('/filtro', [NominaController::class, 'filtro'])->name('nomina.filtro');
 });
 
 Route::prefix('descuentos')->group(function () {
     Route::get('/create', [DescuentoController::class, 'create'])->name('descuentos.create'); // Calcular sueldos
-    Route::post('/store', [DescuentoController::class, 'store'])->name('descuentos.store');
+    Route::get('/{id}/edit', [DescuentoController::class, 'edit'])->name('descuentos.edit');
+    Route::put('/{id}', [DescuentoController::class, 'update'])->name('descuentos.update');
 });
 
 

@@ -12,19 +12,12 @@ class Nomina extends Model
     use HasFactory;
 
     protected $fillable = [
-        'empleado_id',
-        'diasTrabajados',
-        'bonoAntiguedad',
-        'totalGanado',
-        'afp',
+        'fecha,',
         'estado',
-        'rc_iva',
-        'totalDescuento',
-        'liquidoPagable',
     ];
 
-    public function empleado(){
+    public function detalleNomina(){
 
-         return $this->hasMany(Empleado::class);
+         return $this->hasMany(detalleNomina::class);
     }
 }
