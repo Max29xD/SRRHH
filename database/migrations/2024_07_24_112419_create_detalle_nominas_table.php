@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('detalle_nominas', function (Blueprint $table) {
             $table->unsignedBigInteger('empleado_id');
             $table->unsignedBigInteger('nomina_id');
+           // $table->float('salario');
             $table->integer('diasTrabajados')->nullable();
             $table->float('bonoAntiguedad');
             $table->float('totalGanado');

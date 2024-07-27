@@ -12,6 +12,7 @@ class detalleNomina extends Model
     protected $fillable = [  
         'empleado_id',
         'nomina_id',
+        //'salario',
         'diasTrabajados',
         'afp',
         'rc_iva',

@@ -347,11 +347,6 @@ return [
                     'url' => 'nomina/calcular',
                     'icon' => 'fas fa-user-check',
                 ],
-                [
-                    'text' => 'Generar Boleta',
-                    'url' => 'nomina/boleta',
-                    'icon' => 'fas fa-pencil-alt',
-                ],
                
         ],
         ]

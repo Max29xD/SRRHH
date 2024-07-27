@@ -3,12 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\Descuento;
+use App\Models\Asistencia;
+use App\Models\Licencia;
 use App\Models\detalleNomina;
 use Illuminate\Http\Request;
 use App\Models\Nomina;
 use App\Models\Empleado;
 use Carbon\Carbon;
 use GuzzleHttp\Promise\Create;
+use Illuminate\Support\Facades\DB;
+
 
 class NominaController extends Controller
 {
@@ -123,9 +127,11 @@ public function guardar(Request $request)
 
     // Iterar sobre los empleados enviados en la solicitud
     foreach ($request->input('empleados') as $empleadoData) {
-        DetalleNomina::create([
+
+       DetalleNomina::create([
             'empleado_id' => $empleadoData['id'],
             'nomina_id' => $nomina->id, // Usar el ID de la nómina recién creada
+            //'salario' => $empleadoData['sueldo'],
             'diasTrabajados' => $empleadoData['diasTrabajados'] ?? 0,
             'bonoAntiguedad' => $empleadoData['bonoAntiguedad'],
             'totalGanado' => $empleadoData['totalGanado'],
@@ -137,8 +143,9 @@ public function guardar(Request $request)
         ]);
     }
 
-    return redirect()->route('nomina.calcular')->with('success', 'Nómina guardada exitosamente');
+    return redirect()->route('nomina.calcular')->with('success', 'Planilla guardada y reestrablecida exitosamente');
 }
+
 public function filtro(Request $request)
 {
     $anio = $request->input('anio');
@@ -163,10 +170,11 @@ public function filtro(Request $request)
 
 
 
-public function boleta($empleado_id)
+    public function boleta($empleado_id)
     {
-        return  $nomina = Nomina::with('empleado')->findOrFail($empleado_id);
-       /*  return view('nomina.boleta', compact('nomina')); */
+        $empleado = Empleado::with('datosLaborales', 'descuentos')->findOrFail($empleado_id);
+        $detalleNomina = DetalleNomina::where('empleado_id', $empleado_id)->firstOrFail();
 
+        return view('nomina.boleta', compact('empleado', 'detalleNomina'));
     }
 }   

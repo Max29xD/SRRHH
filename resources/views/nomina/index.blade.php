@@ -72,15 +72,15 @@
                                 <th>CI</th>
                                 <th>Nombre</th>
                                 <th>Sueldo base</th>
-                                {{-- <th>Días Trabajados</th>
-                                <th>Bono Antigüedad</th>
+                                <th>Días Trabajados</th>
+                               {{--  <th>Bono Antigüedad</th>
                                 <th>Total Ganado</th>
                                 <th>AFP</th>
                                 <th>RC-IVA</th> --}}
                                 <th>Descuento Adicional</th>
                                 <th>Total Descuentos</th>
                                 <th>Líquido Pagable</th>
-                                <th>Agregar Descuento</th>
+                                <th>Accion</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -88,13 +88,13 @@
                                 <tr>
                                     <td>{{ $empleado->ci }}</td>
                                     <td>{{ $empleado->nombreCompleto }}</td>
-                                    <td>{{ $empleado->sueldo }} Bs</td>
-                                    {{-- <td>{{ $empleado->diasTrabajados ?? 0 }}</td>
-                                    <td>{{ number_format($empleado->bonoAntiguedad ?? 0, 2) }} Bs</td>
+                                    <td>{{ number_format($empleado->sueldo ?? 0, 2) }} Bs</td>
+                                    <td>{{ $empleado->diasTrabajados ?? 0 }}</td>
+                                    {{-- <td>{{ number_format($empleado->bonoAntiguedad ?? 0, 2) }} Bs</td>
                                     <td>{{ number_format($empleado->totalGanado ?? 0, 2) }} Bs</td>
                                     <td>{{ number_format($empleado->afp ?? 0, 2) }} Bs</td>
                                     <td>{{ number_format($empleado->rc_iva ?? 0, 2) }} Bs</td> --}}
-                                    <td>{{ number_format($empleado->descuentoAdicional ?? 0) }}</td>
+                                    <td>{{ number_format($empleado->descuentoAdicional ?? 0, 2) }}</td>
                                     <td>{{ number_format($empleado->totalDescuento ?? 0, 2) }} Bs</td>
                                     <td>{{ number_format($empleado->liquidoPagable ?? 0, 2) }} Bs</td>
                                     <td class="text-center">
@@ -102,27 +102,38 @@
                                             class="btn btn-danger">
                                             <i class="fas fa-minus"></i>
                                         </a>
+                                        {{-- <a href="{{ route('nomina.boleta', ['empleado_id' => $empleado->id]) }}" class="btn btn-primary">
+                                            <i class="fas fa-file-alt"></i> 
+                                        </a> --}}
                                     </td>
                                     <!-- Campos ocultos para cada empleado -->
                                     <input type="hidden" name="empleados[{{ $empleado->id }}][id]"
                                         value="{{ $empleado->id }}">
-                                    <input type="hidden"
-                                        name="empleados[{{ $empleado->id }}][sueldo]"{{-- aquiiiiiiii --}}
+
+                                    {{-- <input type="hidden" name="empleados[{{ $empleado->id }}][sueldo]"
                                         value="{{ $empleado->sueldo }}">
+ --}}
                                     <input type="hidden" name="empleados[{{ $empleado->id }}][diasTrabajados]"
                                         value="{{ $empleado->diasTrabajados }}">
+
                                     <input type="hidden" name="empleados[{{ $empleado->id }}][bonoAntiguedad]"
                                         value="{{ $empleado->bonoAntiguedad }}">
+
                                     <input type="hidden" name="empleados[{{ $empleado->id }}][totalGanado]"
                                         value="{{ $empleado->totalGanado }}">
+
                                     <input type="hidden" name="empleados[{{ $empleado->id }}][afp]"
                                         value="{{ $empleado->afp }}">
+
                                     <input type="hidden" name="empleados[{{ $empleado->id }}][rc_iva]"
                                         value="{{ $empleado->rc_iva }}">
+
                                     <input type="hidden" name="empleados[{{ $empleado->id }}][descuentoAdicional]"
                                         value="{{ $empleado->descuentoAdicional }}">
+
                                     <input type="hidden" name="empleados[{{ $empleado->id }}][totalDescuento]"
                                         value="{{ $empleado->totalDescuento }}">
+
                                     <input type="hidden" name="empleados[{{ $empleado->id }}][liquidoPagable]"
                                         value="{{ $empleado->liquidoPagable }}">
                                 </tr>

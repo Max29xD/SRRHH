@@ -57,8 +57,8 @@
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <h3 class="card-title">Lista de empleados</h3>
                     <div class="right">
-                        <button type="submit" class="btn btn-primary">Guardar Nómina</button>
-                    </div>
+                        <button type="button" class="btn btn-primary" onclick="window.location.href='{{ route('nomina.calcular') }}'">Volver a Planilla</button>
+                    </div>                                     
                 </div>
                 <div class="card-body">
                     @if($detalleNominas->isEmpty())
@@ -69,15 +69,16 @@
                                 <tr>
                                     <th>CI</th>
                                     <th>Nombre</th>
-                                    {{-- <th>Días Trabajados</th>
-                                    <th>Bono Antigüedad</th>
+                                    <th>Sueldo Base</th>
+                                    <th>Días Trabajados</th>
+                                   {{--  <th>Bono Antigüedad</th>
                                     <th>Total Ganado</th>
                                     <th>AFP</th>
                                     <th>RC-IVA</th> --}}
                                     <th>Descuento Adicional</th>
                                     <th>Total Descuentos</th>
                                     <th>Líquido Pagable</th>
-                                    <th>Agregar Descuento</th>
+                                    <th>Accion</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -85,8 +86,9 @@
                                     <tr>
                                         <td>{{ $detalle->empleado->ci }}</td>
                                         <td>{{ $detalle->empleado->nombreCompleto }}</td>
-                                        {{-- <td>{{ number_format($detalle->diasTrabajados ?? 0) }}</td>
-                                        <td>{{ number_format($detalle->bonoAntiguedad, 2) }} Bs</td>
+                                        <td>{{ number_format($detalle->empleado->datosLaborales->salario, 2) }} Bs</td>
+                                        <td>{{ number_format($detalle->diasTrabajados ?? 0) }}</td>
+                                        {{-- <td>{{ number_format($detalle->bonoAntiguedad, 2) }} Bs</td>
                                         <td>{{ number_format($detalle->totalGanado, 2) }} Bs</td>
                                         <td>{{ number_format($detalle->afp, 2) }} Bs</td>
                                         <td>{{ number_format($detalle->rc_iva, 2) }} Bs</td> --}}
@@ -97,6 +99,9 @@
                                             <a href="{{ route('descuentos.create', ['empleado_id' => $detalle->empleado_id]) }}"
                                                 class="btn btn-danger">
                                                 <i class="fas fa-minus"></i>
+                                            </a>
+                                            <a href="{{ route('nomina.boleta', ['empleado_id' => $detalle->empleado_id]) }}" class="btn btn-primary">
+                                                <i class="fas fa-file-alt"></i> 
                                             </a>
                                         </td>
                                     </tr>

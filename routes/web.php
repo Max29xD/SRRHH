@@ -49,7 +49,7 @@ Route::prefix('nomina')->group(function () {
     Route::post('/guardar', [NominaController::class, 'guardar'])->name('nomina.guardar');
     
     Route::post('/aplicarDescuentos', [NominaController::class, 'aplicarDescuentos'])->name('nomina.aplicarDescuentos');//trabajando aqui----
-    Route::get('/boleta', [NominaController::class, 'boleta'])->name('nomina.boleta');
+    Route::get('/boleta{empleado_id}', [NominaController::class, 'boleta'])->name('nomina.boleta');
     Route::get('/filtro', [NominaController::class, 'filtro'])->name('nomina.filtro');
 });
 
