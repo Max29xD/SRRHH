@@ -51,17 +51,23 @@
         </div>
 
         <!-- Lista de empleados -->
-        <form action="{{ route('nomina.guardar') }}" method="POST">
+        <form action="{{ route('nomina.guardarNomina') }}" method="POST">
             @csrf
             <div class="card">
+                @if (session('success'))
+                    <div class="alert alert-success" id="success-alert">
+                        {{ session('success') }}
+                    </div>
+                @endif
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <h3 class="card-title">Lista de empleados</h3>
                     <div class="right">
-                        <button type="button" class="btn btn-primary" onclick="window.location.href='{{ route('nomina.calcular') }}'">Volver a Planilla</button>
-                    </div>                                     
+                        <button type="button" class="btn btn-primary"
+                            onclick="window.location.href='{{ route('nomina.calcular') }}'">Volver a Planilla</button>
+                    </div>
                 </div>
                 <div class="card-body">
-                    @if($detalleNominas->isEmpty())
+                    @if ($detalleNominas->isEmpty())
                         <p>No se encontraron empleados para el período seleccionado.</p>
                     @else
                         <table class="table table-bordered">
@@ -71,14 +77,10 @@
                                     <th>Nombre</th>
                                     <th>Sueldo Base</th>
                                     <th>Días Trabajados</th>
-                                   {{--  <th>Bono Antigüedad</th>
-                                    <th>Total Ganado</th>
-                                    <th>AFP</th>
-                                    <th>RC-IVA</th> --}}
                                     <th>Descuento Adicional</th>
                                     <th>Total Descuentos</th>
                                     <th>Líquido Pagable</th>
-                                    <th>Accion</th>
+                                    <th>Acción</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -88,20 +90,19 @@
                                         <td>{{ $detalle->empleado->nombreCompleto }}</td>
                                         <td>{{ number_format($detalle->empleado->datosLaborales->salario, 2) }} Bs</td>
                                         <td>{{ number_format($detalle->diasTrabajados ?? 0) }}</td>
-                                        {{-- <td>{{ number_format($detalle->bonoAntiguedad, 2) }} Bs</td>
-                                        <td>{{ number_format($detalle->totalGanado, 2) }} Bs</td>
-                                        <td>{{ number_format($detalle->afp, 2) }} Bs</td>
-                                        <td>{{ number_format($detalle->rc_iva, 2) }} Bs</td> --}}
                                         <td>{{ number_format($detalle->descuentoAdicional, 2) }} Bs</td>
                                         <td>{{ number_format($detalle->totalDescuento, 2) }} Bs</td>
                                         <td>{{ number_format($detalle->liquidoPagable, 2) }} Bs</td>
                                         <td class="text-center">
+                                            <!-- Botón para Ver Boleta con color según estado -->
+                                            <a href="{{ route('nomina.boleta', ['empleado_id' => $detalle->empleado_id]) }}"
+                                                class="btn {{ $detalle->boletaPago && $detalle->boletaPago->estado ? 'btn-success' : 'btn-warning' }}">
+                                                <i class="fas fa-file-alt"></i>
+                                             </a>
+                                            <!-- Botón para Descuentos -->
                                             <a href="{{ route('descuentos.create', ['empleado_id' => $detalle->empleado_id]) }}"
                                                 class="btn btn-danger">
                                                 <i class="fas fa-minus"></i>
-                                            </a>
-                                            <a href="{{ route('nomina.boleta', ['empleado_id' => $detalle->empleado_id]) }}" class="btn btn-primary">
-                                                <i class="fas fa-file-alt"></i> 
                                             </a>
                                         </td>
                                     </tr>

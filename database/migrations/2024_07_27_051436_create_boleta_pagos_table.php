@@ -11,21 +11,24 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('detalle_nominas', function (Blueprint $table) {
+        Schema::create('boleta_pagos', function (Blueprint $table) {
+            $table->id(); // Clave primaria simple
             $table->unsignedBigInteger('empleado_id');
             $table->unsignedBigInteger('nomina_id');
-            //$table->float('salario');
             $table->integer('diasTrabajados')->nullable();
+            $table->float('salario');
             $table->float('bonoAntiguedad');
             $table->float('totalGanado');
             $table->float('afp');
-            $table->float("rc_iva");
+            $table->float('rc_iva');
             $table->float('descuentoAdicional');
             $table->float('totalDescuento')->default(0);
             $table->float('liquidoPagable');
-           
+            $table->date('fechaEmision');
+            $table->boolean('estado')->default(false);//para saber si ya se pago
             $table->timestamps();
 
+            // Definir las claves foráneas
             $table->foreign('empleado_id')
                 ->references('id')
                 ->on('empleados')
@@ -36,7 +39,8 @@ return new class extends Migration
                 ->on('nominas')
                 ->onDelete('cascade');
 
-            $table->primary(['empleado_id', 'nomina_id']);
+            // Asegurar que la combinación de empleado_id y nomina_id sea única
+            $table->unique(['empleado_id', 'nomina_id']);
         });
     }
 
@@ -45,6 +49,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('detalle_nominas');
+        Schema::dropIfExists('boleta_pagos');
     }
 };

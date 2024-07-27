@@ -13,6 +13,7 @@ class Asistencia extends Model
         'empleado_id',
         'hora_llegada',
         'hora_salida',
+        'fecha',
     ];
 
     public function empleado()

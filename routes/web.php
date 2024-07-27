@@ -46,11 +46,13 @@ Route::prefix('licencias')->group(function () {
 
 Route::prefix('nomina')->group(function () {
     Route::get('/calcular', [NominaController::class, 'calcular'])->name('nomina.calcular'); // Calcular sueldos
-    Route::post('/guardar', [NominaController::class, 'guardar'])->name('nomina.guardar');
-    
+    Route::post('/guardarNomina', [NominaController::class, 'guardarNomina'])->name('nomina.guardarNomina');
     Route::post('/aplicarDescuentos', [NominaController::class, 'aplicarDescuentos'])->name('nomina.aplicarDescuentos');//trabajando aqui----
     Route::get('/boleta{empleado_id}', [NominaController::class, 'boleta'])->name('nomina.boleta');
     Route::get('/filtro', [NominaController::class, 'filtro'])->name('nomina.filtro');
+    Route::post('/guardarBoleta', [NominaController::class, 'guardarBoleta'])->name('nomina.guardarBoleta');
+
+
 });
 
 Route::prefix('descuentos')->group(function () {

@@ -10,60 +10,53 @@
     <div class="container-fluid">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Detalles de la Boleta de Pago</h3>
+                <h3 class="card-title text-center">Detalles de la Boleta de Pago</h3>
             </div>
             <div class="card-body">
                 <!-- Información del Empleado -->
                 <div class="mb-4 text-center">
-                    <h4>Datos del Empleado</h4>
+                    <h4>Empleado</h4>
                     <p><strong>Nombre:</strong> {{ $empleado->nombreCompleto }}</p>
                     <p><strong>C.I.:</strong> {{ $empleado->ci }}</p>
                     <p><strong>Cargo:</strong> {{ $empleado->datosLaborales->puesto }}</p>
-                    <p><strong>Fecha de Contrato:</strong> {{ $empleado->datosLaborales->fechaContratacion }}</p>
                 </div>
 
                 <!-- Información Financiera -->
                 <div class="mb-4">
                     <h4>Información Financiera</h4>
                     <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>Concepto</th>
-                                <th>Monto</th>
-                            </tr>
-                        </thead>
                         <tbody>
                             <tr>
-                                <td>Sueldo Base</td>
-                                <td>{{ number_format($empleado->datosLaborales->salario, 2) }} Bs</td>
+                                <td><strong>Sueldo Base:</strong></td>
+                                <td class="text-right">{{ number_format($empleado->datosLaborales->salario, 2) }} Bs</td>
                             </tr>
                             <tr>
-                                <td>Bono de Antigüedad</td>
-                                <td>{{ number_format($detalleNomina->bonoAntiguedad, 2) }} Bs</td>
+                                <td><strong>Bono de Antigüedad:</strong></td>
+                                <td class="text-right">{{ number_format($detalleNomina->bonoAntiguedad, 2) }} Bs</td>
                             </tr>
                             <tr>
-                                <td>Total Ganado</td>
-                                <td>{{ number_format($detalleNomina->totalGanado, 2) }} Bs</td>
+                                <td><strong>Total Ganado:</strong></td>
+                                <td class="text-right">{{ number_format($detalleNomina->totalGanado, 2) }} Bs</td>
                             </tr>
                             <tr>
-                                <td>AFP</td>
-                                <td>{{ number_format($detalleNomina->afp, 2) }} Bs</td>
+                                <td><strong>AFP:</strong></td>
+                                <td class="text-right">{{ number_format($detalleNomina->afp, 2) }} Bs</td>
                             </tr>
                             <tr>
-                                <td>RC-IVA</td>
-                                <td>{{ number_format($detalleNomina->rc_iva, 2) }} Bs</td>
+                                <td><strong>RC-IVA:</strong></td>
+                                <td class="text-right">{{ number_format($detalleNomina->rc_iva, 2) }} Bs</td>
                             </tr>
                             <tr>
-                                <td>Descuento Adicional</td>
-                                <td>{{ number_format($detalleNomina->descuentoAdicional, 2) }} Bs</td>
+                                <td><strong>Descuento Adicional:</strong></td>
+                                <td class="text-right">{{ number_format($detalleNomina->descuentoAdicional, 2) }} Bs</td>
                             </tr>
                             <tr>
-                                <td>Total Descuentos</td>
-                                <td>{{ number_format($detalleNomina->totalDescuento, 2) }} Bs</td>
+                                <td><strong>Total Descuentos:</strong></td>
+                                <td class="text-right">{{ number_format($detalleNomina->totalDescuento, 2) }} Bs</td>
                             </tr>
                             <tr>
-                                <td>Líquido Pagable</td>
-                                <td>{{ number_format($detalleNomina->liquidoPagable, 2) }} Bs</td>
+                                <td><strong>Líquido Pagable:</strong></td>
+                                <td class="text-right">{{ number_format($detalleNomina->liquidoPagable, 2) }} Bs</td>
                             </tr>
                         </tbody>
                     </table>
@@ -71,9 +64,9 @@
 
                 <!-- Detalle de Descuentos -->
                 <div class="mt-4">
-                    <h4>Descuentos</h4>
+                    <h4 class="text-center">Descuentos</h4>
                     @if($empleado->descuentos->isEmpty())
-                        <p>No hay descuentos registrados para este empleado.</p>
+                        <p class="text-center">No hay descuentos registrados para este empleado.</p>
                     @else
                         <table class="table table-bordered">
                             <thead>
@@ -88,11 +81,25 @@
                                     <tr>
                                         <td>{{ $descuento->tipoDescuento }}</td>
                                         <td>{{ $descuento->descripcion }}</td>
-                                        <td>{{ number_format($descuento->monto, 2) }} Bs</td>
+                                        <td class="text-right">{{ number_format($descuento->monto, 2) }} Bs</td>
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
+                    @endif
+                </div>
+
+                <!-- Botón para Guardar la Boleta de Pago -->
+                <div class="mt-4 text-center">
+                    @if (!$boletaPago || !$boletaPago->estado)
+                        <form action="{{ route('nomina.guardarBoleta') }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="empleado_id" value="{{ $empleado->id }}">
+                            <input type="hidden" name="nomina_id" value="{{ $detalleNomina->nomina_id }}">
+                            <button type="submit" class="btn btn-primary">Guardar Boleta de Pago</button>
+                        </form>
+                    @else
+                        <p class="text-success">La boleta de pago ya ha sido guardada.</p>
                     @endif
                 </div>
             </div>

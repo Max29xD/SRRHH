@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('empleado_id')->constrained('empleados')->onDelete('cascade');//esta abreviado
             $table->time('hora_llegada')->nullable();
             $table->time('hora_salida')->nullable();
+            $table->date('fecha');
             $table->timestamps();
         });
     }

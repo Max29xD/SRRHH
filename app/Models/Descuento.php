@@ -14,6 +14,7 @@ class Descuento extends Model
         'tipoDescuento',
         'monto',
         'descripcion',
+        'fecha'
     ];
 
     public function empleado(){

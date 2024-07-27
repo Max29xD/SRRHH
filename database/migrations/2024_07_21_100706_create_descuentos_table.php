@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('tipoDescuento');
             $table->float('monto');
             $table->text('descripcion')->nullable();
+            $table->date('fecha');
             $table->timestamps();    
 
             $table->foreign('empleado_id')

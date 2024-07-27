@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+
 use App\Models\Empleado;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -9,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 class detalleNomina extends Model
 {
     use HasFactory;
-    protected $fillable = [  
+    protected $fillable = [
         'empleado_id',
         'nomina_id',
         //'salario',
@@ -23,16 +24,19 @@ class detalleNomina extends Model
         'descuentoAdicional',
     ];
 
-    public function  empleado(){
+    public function  empleado()
+    {
         return $this->belongsTo(Empleado::class);
     }
 
-    public function  nomina(){
+    public function  nomina()
+    {
         return $this->belongsTo(Nomina::class);
     }
 
-    
+    public function boletaPago()
+    {
+        return $this->hasOne(BoletaPago::class, 'empleado_id', 'empleado_id')
+            ->where('nomina_id', $this->nomina_id);
+    }
 }
-
-
-

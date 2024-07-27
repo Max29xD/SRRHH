@@ -22,6 +22,7 @@ class AsistenciaController extends Controller
         Asistencia::create([
             'empleado_id' => $empleado->id,//para que empleado es la asistencia
             'hora_llegada' => Carbon::now()->format('H:i:s'), 
+            'fecha' => now()
         ]);
 
         return redirect()->route('asistencias.create')
