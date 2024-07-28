@@ -18,7 +18,7 @@ use App\Models\boletaPago;
 class NominaController extends Controller
 {
 
-    public function calcular()
+    public function index()
     {
         $empleados = Empleado::withCount('asistencias')
             ->having('asistencias_count', '<=', 30)
@@ -119,7 +119,7 @@ class NominaController extends Controller
     }
     public function store(Request $request)
     {
-        // Crear una nueva nomina
+        // Crear una nueva nómina
         $nomina = Nomina::create([
             'fecha' => now(),
             'estado' => true,
@@ -128,10 +128,10 @@ class NominaController extends Controller
         // Iterar sobre los empleados enviados en la solicitud
         foreach ($request->input('empleados') as $empleadoData) {
 
+            // Guardar el detalle de la nómina
             DetalleNomina::create([
                 'empleado_id' => $empleadoData['id'],
                 'nomina_id' => $nomina->id, // Usar el ID de la nómina recién creada
-                //'salario' => $empleadoData['sueldo'],
                 'diasTrabajados' => $empleadoData['diasTrabajados'] ?? 0,
                 'bonoAntiguedad' => $empleadoData['bonoAntiguedad'],
                 'totalGanado' => $empleadoData['totalGanado'],
@@ -141,9 +141,15 @@ class NominaController extends Controller
                 'totalDescuento' => $empleadoData['totalDescuento'],
                 'liquidoPagable' => $empleadoData['liquidoPagable'],
             ]);
+
+            // Borrar todas las asistencias del empleado
+            $empleado = Empleado::find($empleadoData['id']);
+            if ($empleado) {
+                $empleado->asistencias()->delete();
+            }
         }
 
-        return redirect()->route('nomina.calcular')->with('success', 'Planilla guardada y reestrablecida exitosamente');
+        return redirect()->route('nomina.index')->with('success', 'Planilla guardada y días trabajados reiniciados exitosamente');
     }
 
     public function filtro(Request $request)
@@ -166,5 +172,4 @@ class NominaController extends Controller
 
         return view('nomina.filtro', ['detalleNominas' => $detalleNominas]);
     }
-
 }

@@ -16,7 +16,7 @@
                 <h3 class="card-title">Buscar Nómina</h3>
             </div>
             <div class="card-body">
-                <form action="{{ route('nomina.calcular') }}" method="GET">
+                <form action="{{ route('nomina.index') }}" method="GET">
                     @csrf
                     <div class="form-row">
                         <div class="form-group col-md-4">
@@ -54,23 +54,25 @@
         <form action="{{ route('nomina.store') }}" method="POST">
             @csrf
             <div class="card">
-                @if (session('success'))
-                    <div class="alert alert-success" id="success-alert">
-                        {{ session('success') }}
-                    </div>
+                @if(session('success'))
+                <div class="alert alert-success" id="success-alert">
+                    {{ session('success') }}
+                </div>
                 @endif
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <h3 class="card-title">Lista de empleados</h3>
                     <div class="right">
                         <button type="button" class="btn btn-primary"
-                            onclick="window.location.href='{{ route('nomina.calcular') }}'">Volver a Planilla</button>
+                            onclick="window.location.href='{{ route('nomina.index') }}'">Volver a Planilla</button>
+                        <button type="button" class="btn btn-success" onclick="printData()">Imprimir</button>
                     </div>
                 </div>
-                <div class="card-body">
+                <div class="card-body" id="printableArea">
                     @if ($detalleNominas->isEmpty())
                         <p>No se encontraron empleados para el período seleccionado.</p>
                     @else
-                        <table class="table table-bordered">
+{{--                         <h4 class="text-center">Fecha de Nómina: {{ date('d/m/Y') }}</h4>
+ --}}                        <table class="table table-bordered">
                             <thead>
                                 <tr>
                                     <th>CI</th>
@@ -115,6 +117,34 @@
         </form>
     </div>
 @stop
+
+@section('css')
+    <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
+@stop
+
+@section('js')
+    <script>
+        console.log('Nómina Page');
+
+        function printData() {
+            var printWindow = window.open('', '', 'height=800,width=1200');
+            var printContent = document.getElementById('printableArea').innerHTML;
+            var date = new Date();
+            var formattedDate = date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
+
+            printWindow.document.write('<html><head><title>Impresión de Nómina</title>');
+            printWindow.document.write('<style>table {width: 100%; border-collapse: collapse;} th, td {border: 1px solid #ddd; padding: 8px;} th {background-color: #f2f2f2;}</style>');
+            printWindow.document.write('</head><body>');
+            printWindow.document.write('<h1 class="text-center">Planilla de Sueldos</h1>');
+            printWindow.document.write('<h4 class="text-center">Fecha de Nómina: ' + formattedDate + '</h4>');
+            printWindow.document.write(printContent);
+            printWindow.document.write('</body></html>');
+            printWindow.document.close();
+            printWindow.focus();
+            printWindow.print();
+        }
+    </script>
+@stop
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const alert = document.getElementById('success-alert');
@@ -125,12 +155,3 @@
         }
     });
 </script>
-@section('css')
-    <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
-@stop
-
-@section('js')
-    <script>
-        console.log('Nómina Page');
-    </script>
-@stop

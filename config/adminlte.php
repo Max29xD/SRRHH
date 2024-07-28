@@ -340,7 +340,7 @@ return [
         //boton 4
         [
             'text' => 'NOMINA',
-            'url' => 'nomina/calcular',
+            'url' => 'nomina',
             'icon' => 'fas fa-user-check',
 
         ],

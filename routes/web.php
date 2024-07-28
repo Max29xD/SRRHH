@@ -47,7 +47,7 @@ Route::prefix('licencias')->group(function () {
 });
 
 Route::prefix('nomina')->group(function () {
-    Route::get('/calcular', [NominaController::class, 'calcular'])->name('nomina.calcular'); // Calcular sueldos
+    Route::get('/', [NominaController::class, 'index'])->name('nomina.index'); // Calcular sueldos
     Route::post('/store', [NominaController::class, 'store'])->name('nomina.store');
     Route::post('/aplicarDescuentos', [NominaController::class, 'aplicarDescuentos'])->name('nomina.aplicarDescuentos');//trabajando aqui-----
     Route::get('/filtro', [NominaController::class, 'filtro'])->name('nomina.filtro');
