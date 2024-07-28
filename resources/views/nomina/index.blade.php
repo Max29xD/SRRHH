@@ -51,7 +51,7 @@
         </div>
 
         <!-- Lista de empleados -->
-        <form action="{{ route('nomina.guardarNomina') }}" method="POST">
+        <form action="{{ route('nomina.store') }}" method="POST">
             @csrf
             <div class="card">
                 @if (session('success'))

@@ -51,7 +51,7 @@
         </div>
 
         <!-- Lista de empleados -->
-        <form action="{{ route('nomina.guardarNomina') }}" method="POST">
+        <form action="{{ route('nomina.store') }}" method="POST">
             @csrf
             <div class="card">
                 @if (session('success'))
@@ -95,7 +95,7 @@
                                         <td>{{ number_format($detalle->liquidoPagable, 2) }} Bs</td>
                                         <td class="text-center">
                                             <!-- Botón para Ver Boleta con color según estado -->
-                                            <a href="{{ route('nomina.boleta', ['empleado_id' => $detalle->empleado_id]) }}"
+                                            <a href="{{ route('boleta.show', ['empleado_id' => $detalle->empleado_id]) }}"
                                                 class="btn {{ $detalle->boletaPago && $detalle->boletaPago->estado ? 'btn-success' : 'btn-warning' }}">
                                                 <i class="fas fa-file-alt"></i>
                                              </a>
@@ -115,7 +115,16 @@
         </form>
     </div>
 @stop
-
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const alert = document.getElementById('success-alert');
+        if (alert) {
+            setTimeout(() => {
+                alert.style.display = 'none';
+            }, 3000);
+        }
+    });
+</script>
 @section('css')
     <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
 @stop

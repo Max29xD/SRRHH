@@ -6,6 +6,8 @@ use App\Http\Controllers\AsistenciaController;
 use App\Http\Controllers\LicenciaController;
 use App\Http\Controllers\NominaController;
 use App\Http\Controllers\DescuentoController;
+use App\Models\boletaPago;
+use App\Http\Controllers\BoletaPagoController;
 
 Auth::routes();
 
@@ -46,15 +48,19 @@ Route::prefix('licencias')->group(function () {
 
 Route::prefix('nomina')->group(function () {
     Route::get('/calcular', [NominaController::class, 'calcular'])->name('nomina.calcular'); // Calcular sueldos
-    Route::post('/guardarNomina', [NominaController::class, 'guardarNomina'])->name('nomina.guardarNomina');
-    Route::post('/aplicarDescuentos', [NominaController::class, 'aplicarDescuentos'])->name('nomina.aplicarDescuentos');//trabajando aqui----
-    Route::get('/boleta{empleado_id}', [NominaController::class, 'boleta'])->name('nomina.boleta');
+    Route::post('/store', [NominaController::class, 'store'])->name('nomina.store');
+    Route::post('/aplicarDescuentos', [NominaController::class, 'aplicarDescuentos'])->name('nomina.aplicarDescuentos');//trabajando aqui-----
     Route::get('/filtro', [NominaController::class, 'filtro'])->name('nomina.filtro');
+    Route::get('/filtro/boletas', [NominaController::class, 'filtroBoletas'])->name('nomina.filtro.boletas');
     Route::post('/guardarBoleta', [NominaController::class, 'guardarBoleta'])->name('nomina.guardarBoleta');
 
 
 });
-
+Route::prefix('boleta')->group(function () {//implementando todos los metodos
+    Route::get('/', [boletaPagoController::class, 'index'])->name('boleta.index');
+    Route::get('/show{empleado_id}', [boletaPagoController::class, 'show'])->name('boleta.show');
+    Route::post('/store', [boletaPagoController::class, 'store'])->name('boleta.store');
+});
 Route::prefix('descuentos')->group(function () {
     Route::get('/create', [DescuentoController::class, 'create'])->name('descuentos.create'); // Calcular sueldos
     Route::get('/{id}/edit', [DescuentoController::class, 'edit'])->name('descuentos.edit');

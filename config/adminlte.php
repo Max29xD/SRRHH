@@ -64,9 +64,9 @@ return [
     */
 
     'logo' => '<b>Software</b>1 |',
-    'logo_img' => 'vendor/adminlte/dist/img/logoFinor.png',//logo
+    'logo_img' => 'vendor/adminlte/dist/img/logoFinor.png', //logo
     'logo_img_class' => 'brand-image img-circle elevation-3',
-    'logo_img_xl' => null,//par cuando quiera 2 logos 1 barra expandida 2 barra pequeña
+    'logo_img_xl' => null, //par cuando quiera 2 logos 1 barra expandida 2 barra pequeña
     'logo_img_xl_class' => 'brand-image-xs',
     'logo_img_alt' => 'logo Finor',
 
@@ -295,16 +295,16 @@ return [
 
     'menu' => [
         // Navbar items:
-       
+
 
         // Sidebar items:
-      
+
         //boton 1
         [
             'text' => 'GESTION EMPLEADOS',
             'url' => 'empleados',
             'icon' => 'fas fa-users',
-    
+
         ],
         // boton 2
         [
@@ -327,7 +327,7 @@ return [
                     'url' => 'asistencias',
                     'icon' => 'fas fa-list',
                 ],
-               
+
             ],
         ],
         //boton 3
@@ -335,24 +335,25 @@ return [
             'text' => 'GESTION DE LICENCIAS',
             'url' => 'licencias',
             'icon' => 'fas fa-calendar-check',
-            
+
         ],
-       //boton 4
+        //boton 4
         [
             'text' => 'NOMINA',
-            'icon' => 'fas fa-money-check-alt', 
-            'submenu' => [
-                [
-                    'text' => 'planilla',
-                    'url' => 'nomina/calcular',
-                    'icon' => 'fas fa-user-check',
-                ],
-               
-        ],
-        ]
+            'url' => 'nomina/calcular',
+            'icon' => 'fas fa-user-check',
 
-        
-       
+        ],
+        /* [
+            'text' => 'BOLETAS',
+            'url' => 'boleta',
+            'icon' => 'fas fa-money-check-alt', 
+
+
+        ], */
+
+
+
     ],
 
     /*
