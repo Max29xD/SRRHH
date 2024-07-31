@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('nominas', function (Blueprint $table) {
             $table->id();
-            $table->timestamp('fecha');
+            $table->date('fecha');
             $table->boolean('estado')->default(false); // false indica no pagado
             $table->timestamps();  
         }); 
