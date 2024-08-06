@@ -12,7 +12,7 @@ class Nomina extends Model
     use HasFactory;
 
     protected $fillable = [
-        'fecha,',
+        'fecha',
         'estado',
     ];
 
